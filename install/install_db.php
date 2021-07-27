@@ -144,7 +144,8 @@ if($g5_install || !$result) {
     // 기본 이미지 확장자를 설정하고
     $image_extension = "gif|jpg|jpeg|png";
     // 서버에서 webp 를 지원하면 확장자를 추가한다.
-    if (function_exists("imagewebp")) {
+    $gd_info = gd_info();
+    if (isset($gd_info["WebP Support"]) && $gd_info["WebP Support"]) {
         $image_extension .= "|webp";
     }
 
