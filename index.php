@@ -3,12 +3,13 @@
 require './vendor/autoload.php';
 
 $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) {
-    $r->addRoute('GET', '/users', 'User/getUsers');
+    $r->addRoute('GET', '/users', 'Users/index');
     // {id} must be a number (\d+)
     $r->addRoute('GET', '/user/{id:\d+}', 'get_user_handler');
     // The /{title} suffix is optional
     $r->addRoute('GET', '/articles/{id:\d+}[/{title}]', 'get_article_handler');
     $r->addRoute('GET', '/', 'Index');
+    $r->addRoute('GET', '/install', 'Install/index');
 });
 
 // Fetch method and URI from somewhere
@@ -37,9 +38,7 @@ switch ($routeInfo[0]) {
         // list($class, $method) = explode("/", $handler, 2);
         // call_user_func_array(array(new $class, $method), $vars);
         $handler = trim($handler);
-        if ($handler === "") {
-            die("'{$handler}' route is not found.");
-        } else if (strpos($handler, "/") === false) {
+        if (strpos($handler, "/") === false) {
             $func = $handler; // 함수
             call_user_func_array($func, $vars);
         } else {
@@ -50,11 +49,10 @@ switch ($routeInfo[0]) {
         break;
 }
 
-class User
+class Users
 {
-    function getUsers()
-    {
-        echo "User/getUsers";
+    function index() {
+        echo "Users/index";
     }
 }
 
@@ -66,7 +64,19 @@ class User
 //     }
 // }
 
-function Index()
-{
+function Index() {
     echo "Index";
+}
+
+function get_user_handler($id) {
+    echo "get_user_handler($id)";
+}
+
+class Install
+{
+    function index() {
+        echo "1";
+        include("./setup/main.php");
+        echo "2";
+    }
 }
