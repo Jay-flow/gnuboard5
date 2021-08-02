@@ -10,6 +10,9 @@ $dispatcher = FastRoute\simpleDispatcher(function (FastRoute\RouteCollector $r) 
     $r->addRoute('GET', '/articles/{id:\d+}[/{title}]', 'get_article_handler');
     $r->addRoute('GET', '/', 'Index');
     $r->addRoute('GET', '/install', 'Install/index');
+    $r->addRoute('GET', '/kim', 'Kim/index');
+    $r->addRoute('GET', '/php8', 'Php8/test');
+
 });
 
 // Fetch method and URI from somewhere
@@ -79,4 +82,18 @@ class Install
         include("./setup/main.php");
         echo "2";
     }
+}
+
+class Kim
+{
+	function index() {
+		echo "kim/index";
+	}
+}
+
+class Php8
+{
+	function test() {
+		include "./test.php";
+	}
 }
