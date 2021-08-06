@@ -210,7 +210,9 @@ function generate_seo_title($string, $wordLimit=G5_SEO_TITEL_WORD_CUT){
         '('.$quoteSeparator.')+'=> $separator
     );
 
-    $string = strip_tags($string);
+    // 환경설정 > 기본환경설정> 짧은 주소 설정에서 글 이름으로 사용시 <제목> 과 같은 문자열을 태그로 인식하여 '제목'을 없애 버리는 문제를 수정 (목선웅님,210806)
+    // $string = strip_tags($string);
+    $string = str_replace(array('<', '>'), '', $string);
 
     if( function_exists('mb_convert_encoding') ){
         $string = mb_convert_encoding($string, 'UTF-8', 'UTF-8');
